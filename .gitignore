@@ -1,0 +1,8 @@
+node_modules/
+target/
+.run/
+*.log
+.DS_Store
+*.keypair.json
+id.json
+zecwasm/pkg-testkit/

@@ -1,0 +1,18 @@
+# One-command HALFKEY maker:  docker compose -f maker/docker-compose.yml up -d
+# Put config.json (see config.example.json), your maker authority keypair and your hot XMR wallet in ./maker-data.
+# Point daemonUri at your own monerod (pruned is fine); a remote node is acceptable for the wallets only.
+services:
+  wallet-main:
+    image: ghcr.io/sethforprivacy/simple-monero-wallet-rpc:latest
+    command: ["--daemon-address=${MONEROD:-monerod:18081}", "--rpc-bind-port=18090", "--rpc-bind-ip=0.0.0.0", "--confirm-external-bind", "--disable-rpc-login", "--wallet-dir=/wallets", "--trusted-daemon"]
+    volumes: ["./maker-data/wallets:/wallets"]
+  wallet-swaps:
+    image: ghcr.io/sethforprivacy/simple-monero-wallet-rpc:latest
+    command: ["--daemon-address=${MONEROD:-monerod:18081}", "--rpc-bind-port=18091", "--rpc-bind-ip=0.0.0.0", "--confirm-external-bind", "--disable-rpc-login", "--wallet-dir=/swaps", "--trusted-daemon"]
+    volumes: ["./maker-data/swaps:/swaps"]
+  maker:
+    build: { context: .., dockerfile: maker/Dockerfile }
+    depends_on: [wallet-main, wallet-swaps]
+    ports: ["7801:7801"]
+    volumes: ["./maker-data:/config", "./maker-data/journal:/var/lib/halfkey-maker"]
+    restart: unless-stopped

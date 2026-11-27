@@ -1,0 +1,11 @@
+{
+  "keypair": "/secure/attester.json",
+  "nodes": [
+    "http://127.0.0.1:18081",
+    "https://<an independent monerod>:18089"
+  ],
+  "net": "mainnet",
+  "minConf": 10,
+  "trustProxy": true,
+  "port": 7951
+}

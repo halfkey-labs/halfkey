@@ -1,0 +1,52 @@
+[package]
+name = "halfkey-zecwasm"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "HALFKEY ZEC leg: shielded (Ironwood) HTLC spends built and proven client side; ECDSA adaptor signatures + cross-curve DLEQ"
+license = "BUSL-1.1"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+# Test-only helpers (a seed-derived Ironwood wallet and trial decryption) for the regtest runner.
+testkit = []
+
+[dependencies]
+zcash_primitives = { version = "=0.31.0", default-features = false, features = ["std", "circuits"] }
+zcash_protocol = "=0.11.0"
+zcash_transparent = { version = "=0.11.0", default-features = false, features = ["std"] }
+zcash_address = "=0.14.0"
+zcash_note_encryption = "0.5"
+orchard = { version = "=0.16.0", default-features = false, features = ["std", "circuit"] }
+zip32 = "0.3"
+sapling-crypto = { version = "0.9", default-features = false }
+zcash_script = { version = "0.6", default-features = false }
+rand_core = "0.10"
+getrandom = { version = "0.4", features = ["sys_rng"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+hex = "0.4"
+wasm-bindgen = "=0.2.100"
+# ZEC v2 (unlinkable): ECDSA adaptor signatures and the secp256k1 <-> ed25519 DLEQ (LLFourn/secp256kfun).
+ecdsa_fun = { version = "=0.12.0", default-features = false, features = ["adaptor", "alloc", "std"] }
+sigma_fun = { version = "=0.9.0", default-features = false, features = ["ed25519", "secp256k1", "alloc", "serde"] }
+sha2 = "0.10"
+rand_chacha = "0.3"
+rand_core06 = { package = "rand_core", version = "0.6" }
+getrandom02 = { package = "getrandom", version = "0.2" }
+bincode = { version = "2", default-features = false, features = ["alloc", "serde"] }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+getrandom = { version = "0.4", features = ["sys_rng", "wasm_js"] }
+getrandom02 = { package = "getrandom", version = "0.2", features = ["js"] }
+js-sys = "0.3"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+debug = false
+panic = "abort"

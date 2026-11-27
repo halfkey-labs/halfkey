@@ -1,0 +1,28 @@
+{
+  "name": "halfkey",
+  "private": true,
+  "type": "module",
+  "license": "BUSL-1.1",
+  "description": "Atomic swaps between Solana and Monero: the on-chain program, the TypeScript SDK, the maker and the towers.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/halfkey-labs/halfkey.git"
+  },
+  "scripts": {
+    "build:program": "cd program && cargo build-sbf --sbf-out-dir ../target/deploy",
+    "build:verified": "cd program && solana-verify build --library-name halfkey --base-image solanafoundation/solana-verifiable-build@sha256:6468b89ae21d87b8eb002f894ac3f3442dbd8bcf5ea93414051e96e00d03b5ab",
+    "build:zecwasm": "sh zecwasm/build.sh",
+    "test": "HALFKEY_PROGRAM_ID=11111111111111111111111111111111 node --test --test-concurrency=2 sdk/*.test.ts maker/*.test.ts watchtower/*.test.ts",
+    "test:program": "cd program && cargo test --features no-entrypoint"
+  },
+  "dependencies": {
+    "@noble/curves": "^1.9.7",
+    "@noble/hashes": "^1.8.0",
+    "@solana/web3.js": "^1.98.4",
+    "bs58": "^6.0.0",
+    "monero-ts": "^0.11.21"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.10"
+  }
+}

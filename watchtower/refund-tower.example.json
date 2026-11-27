@@ -1,0 +1,13 @@
+{
+  "programId": "<program id>",
+  "index": 1,
+  "keypair": "/etc/halfkey/refund-tower-key.json",
+  "port": 7911,
+  "db": "/var/lib/halfkey-refund-tower/shares.json",
+  "makers": ["<maker authority pubkey>"],
+  "rpcUrls": ["<RPC provider A, a key made for this box alone>", "https://api.mainnet-beta.solana.com"],
+  "peers": ["<tower 2 https URL>/rt", "<tower 3 https URL>/rt"],
+  "pollMs": 20000,
+  "trustProxy": true,
+  "priority": {}
+}

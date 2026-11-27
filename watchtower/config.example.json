@@ -1,0 +1,13 @@
+{
+  "rpcUrl": "https://api.mainnet-beta.solana.com",
+  "programId": "<HALFKEY program id>",
+  "keypair": "/secure/watchtower.json",
+  "priority": {},
+  "trustProxy": true,
+  "port": 7901,
+  "daemonUri": "http://127.0.0.1:18081",
+  "minConf": 10,
+  "abortMarginSecs": 600,
+  "pollMs": 15000,
+  "db": "/var/lib/halfkey-watchtower/watches.json"
+}
